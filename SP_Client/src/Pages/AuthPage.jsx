@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import './AuthPage.scss';
 
@@ -11,41 +11,47 @@ function AuthPage() {
   const [user, setUser] = useState(null);
   const [dashboardData, setDashboardData] = useState(null);
 
- const handleLogin = async () => {
-    // Standard explicit application config for cross-origin tracking
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
+    const handleLogin = async () => {
+      // Standard explicit application config for cross-origin tracking
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      };
 
-    try {
-      if (authMode === 'vulnerable') {
-        // Pass an explicit empty body object {} as the second argument
-        const res = await axios.post(`${API_URL}/auth/login-vulnerable`, {}, config);
-        localStorage.setItem('auth_token', res.data.token);
-        setUser(res.data.user);
-      } else {
-        // Pass an explicit empty body object {} as the second argument
-        const res = await axios.post(`${API_URL}/auth/login-secure`, {}, config);
-        setUser(res.data.user);
-      }
+      try {
+        if (authMode === 'vulnerable') {
+          // Pass an explicit empty body object {} as the second argument
+          const res = await axios.post(`https://sp-server-odyz.onrender.com/api/auth/login-vulnerable`, {}, config);
+          localStorage.setItem('auth_token', res.data.token);
+          setUser(res.data.user);
+        } else {
+          // Pass an explicit empty body object {} as the second argument
+          const res = await axios.post(`https://sp-server-odyz.onrender.com/api/auth/login-secure`, {}, config);
+          setUser(res.data.user);
+        }
     } catch (error) {
       console.error(error);
       alert('Login pipeline failed. Please verify server availability.');
     }
   };
 
-  const fetchProtectedData = async () => {
-    const config = {};
-    if (authMode === 'vulnerable') {
-      const token = localStorage.getItem('auth_token');
-      config.headers = { Authorization: `Bearer ${token}` };
-    }
+    const fetchProtectedData = async () => {
+      const config = {
+        withCredentials: true
+      };
+      if (authMode === 'vulnerable') {
+        const token = localStorage.getItem('auth_token');
+        config.headers = { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        };
+      }
 
-    try {
-      const res = await axios.get(`${API_URL}/dashboard/data`, config);
-      setDashboardData(res.data);
+      try {
+        const res = await axios.get(`https://sp-server-odyz.onrender.com/api/dashboard/data`, config);
+        setDashboardData(res.data);
     } catch (error) {
       console.error(error);
       alert('Unauthorized: Session validation failed.');
