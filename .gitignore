@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+SP_Server/node_modules/
+SP_Client/node_modules/
+
+# Environment configurations
+.env
+SP_Server/.env
+
+# Local logs and build outputs
+npm-debug.log*
+SP_Client/dist/
