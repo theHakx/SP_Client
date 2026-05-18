@@ -14,18 +14,19 @@ if (process.env.NODE_ENV === 'production') {
 
 // 2. Manual Custom CORS Middleware (Bypasses the 'cors' package entirely)
 app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  const allowedOrigins = [
-    'https://sp-client-seven.vercel.app',
-    'https://sp-client-seven.vercel.app/',
-    'http://localhost:5173',
-    'http://localhost:5000'
-  ];
-  
-  // If the browser origin is in our whitelist, mirror it back explicitly
-  if (allowedOrigins.includes(origin) || (origin && origin.startsWith('http://localhost'))) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
+    const origin = req.headers.origin;
+    // Normalize by removing trailing slashes from all origins
+    const normalizedOrigin = origin ? origin.replace(/\/+$/, '') : null;
+    const allowedOrigins = [
+      'https://sp-client-seven.vercel.app',
+      'http://localhost:5173',
+      'http://localhost:5000'
+    ];
+    
+    // If the browser origin is in our whitelist, mirror it back explicitly
+    if (normalizedOrigin && (allowedOrigins.includes(normalizedOrigin) || normalizedOrigin.startsWith('http://localhost'))) {
+      res.setHeader('Access-Control-Allow-Origin', normalizedOrigin);
+    }
   
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
