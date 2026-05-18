@@ -1,38 +1,44 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const cors = require('cors');
 const authRoutes = require('./Routes/authRoutes');
 const dashboardRoutes = require('./Routes/dashboardRoutes');
 require('dotenv').config();
 
 const app = express();
 
-// When behind a proxy (Render, Vercel, etc.) enable trust proxy so secure cookies work
+// 1. Proxy configuration must run first for secure cloud cookies
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
 }
 
-// Hardcoded literal array to bypass any hidden string/whitespace parsing bugs
-const allowedOrigins = [
-  'https://sp-client-seven.vercel.app',
-  'https://sp-client-seven.vercel.app/',
-  'http://localhost:5173',
-  'http://localhost:5000'
-];
+// 2. Manual Custom CORS Middleware (Bypasses the 'cors' package entirely)
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const allowedOrigins = [
+    'https://sp-client-seven.vercel.app',
+    'https://sp-client-seven.vercel.app/',
+    'http://localhost:5173',
+    'http://localhost:5000'
+  ];
+  
+  // If the browser origin is in our whitelist, mirror it back explicitly
+  if (allowedOrigins.includes(origin) || (origin && origin.startsWith('http://localhost'))) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  
+  // Instantly intercept and approve browser pre-flight OPTIONS handshakes
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
-app.use(cors({
-  origin: function (origin, callback) {
-    // 1. Allow mobile/server-to-server testing tools (like Postman/Insomnia) where origin is undefined
-    // 2. Match strictly against our explicit production and development array whitelist
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    return callback(new Error('Not allowed by CORS Gateway policy'));
-  },
-  credentials: true
-}));
-
+// 3. Standard parsing middlewares
 app.use(express.json());
 app.use(cookieParser());
 
@@ -41,10 +47,10 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB Connected Successfully'))
   .catch(err => console.error('MongoDB Connection Error, Abort:', err));
 
-// Check if the DB gateway is breathing
+// Core Gateway Health Check
 app.get('/', (req, res) => res.send('PoC Gateway API Online'));
 
-// Routes
+// Routes Mounting
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
