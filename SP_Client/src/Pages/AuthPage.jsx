@@ -2,7 +2,9 @@
 import axios from 'axios';
 import './AuthPage.scss';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Hardcoded production endpoint to bypass Vercel environment variable parsing bugs
+const API_URL = 'https://sp-server-odyz.onrender.com/api';
 
 function AuthPage() {
   const [authMode, setAuthMode] = useState('vulnerable');
