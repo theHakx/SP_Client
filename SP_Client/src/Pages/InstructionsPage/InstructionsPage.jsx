@@ -8,7 +8,7 @@ function InstructionsPage() {
       <header className="lab-header">
         <div className="lab-badge">Documentation</div>
         <div>
-          <h1 className="title">Security Audit Lab — Operations Manual</h1>
+          <h1 className="title">Security Audit Lab -Operations Manual</h1>
           <p className="subtitle">
             A complete technical reference for navigating the Shona Prince Authentication Lab.
             Understand the attack surface, test the vulnerability, and learn how HttpOnly cookies close the exploit vector.
@@ -19,13 +19,8 @@ function InstructionsPage() {
       {/* SECTION 1: Quick-Start Maneuvering Guide */}
       <section className="info-section">
         <div className="section-header">
-          <div className="section-icon danger">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-            </svg>
-          </div>
           <div>
-            <h2 className="section-title">Section 1 — Quick-Start Maneuvering Guide</h2>
+            <h2 className="section-title">Section 1 - Quick-Start Maneuvering Guide</h2>
             <p className="section-subtitle">Follow this controlled sequence to observe the exploit in both modes.</p>
           </div>
         </div>
@@ -36,7 +31,7 @@ function InstructionsPage() {
             <div className="step-content">
               <h3>Select LocalStorage Mode</h3>
               <p>
-                On the <strong>Authentication Workflow</strong> panel, select the
+                On the <strong>Authentication Workflow</strong> panel, select the{' '}
                 <span className="chip chip-local">LocalStorage</span> option.
                 This configures the client to persist tokens directly in the browser's local storage.
               </p>
@@ -59,7 +54,7 @@ function InstructionsPage() {
             <div className="step-content">
               <h3>Execute XSS Payload</h3>
               <p>
-                In the <strong>Threat Surface Simulator</strong> panel, click the red
+                In the <strong>Threat Surface Simulator</strong> panel, click the red{' '}
                 <span className="chip chip-danger">Inject XSS Payload</span> button.
                 This simulates a malicious script scraping <code>localStorage</code>.
               </p>
@@ -75,9 +70,9 @@ function InstructionsPage() {
             <div className="step-content">
               <h3>Switch to HttpOnly Cookies</h3>
               <p>
-                Clear your session and select the
+                Clear your session and select the{' '}
                 <span className="chip chip-secure">HttpOnly Cookie</span> mode.
-                Re-authenticate — the token is now baked into an <code>HttpOnly</code> cookie by the server.
+                Re-authenticate -the token is now baked into an <code>HttpOnly</code> cookie by the server.
               </p>
             </div>
           </div>
@@ -87,8 +82,8 @@ function InstructionsPage() {
             <div className="step-content">
               <h3>Re-run the Exploit</h3>
               <p>
-                Click <strong>Inject XSS Payload</strong> again. The malicious script now receives
-                <code>undefined</code> — the browser natively blocks JavaScript access to
+                Click <strong>Inject XSS Payload</strong> again. The malicious script now receives{' '}
+                <code>undefined</code> -the browser natively blocks JavaScript access to{' '}
                 <code>HttpOnly</code> cookies. The exploit is neutralized.
               </p>
             </div>
@@ -99,15 +94,8 @@ function InstructionsPage() {
       {/* SECTION 2: The Attack Vector Explanation */}
       <section className="info-section">
         <div className="section-header">
-          <div className="section-icon warning">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-              <line x1="12" y1="9" x2="12" y2="13" />
-              <line x1="12" y1="17" x2="12.01" y2="17" />
-            </svg>
-          </div>
           <div>
-            <h2 className="section-title">Section 2 — The Attack Vector Explanation</h2>
+            <h2 className="section-title">Section 2 -The Attack Vector Explanation</h2>
             <p className="section-subtitle">Why client-side token storage creates a critical security gap.</p>
           </div>
         </div>
@@ -120,37 +108,23 @@ function InstructionsPage() {
             </p>
             <ul className="threat-list">
               <li>
-                <span className="threat-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10" /><line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
-                  </svg>
-                </span>
-                <span><strong>Cross-Site Scripting (XSS)</strong> — Injected malicious scripts that read and exfiltrate token data</span>
+                <span className="threat-bullet-marker">•</span>
+                <span><strong>Cross-Site Scripting (XSS)</strong> -Injected malicious scripts that read and exfiltrate token data</span>
               </li>
               <li>
-                <span className="threat-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><line x1="9" y1="3" x2="9" y2="21" />
-                  </svg>
-                </span>
-                <span><strong>Tracking Pixels &amp; Malvertising</strong> — Third-party scripts with indirect DOM access</span>
+                <span className="threat-bullet-marker">•</span>
+                <span><strong>Tracking Pixels &amp; Malvertising</strong> -Third-party scripts with indirect DOM access</span>
               </li>
               <li>
-                <span className="threat-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
-                  </svg>
-                </span>
-                <span><strong>Compromised Dependencies</strong> — Supply-chain attacks on npm packages that skim storage</span>
+                <span className="threat-bullet-marker">•</span>
+                <span><strong>Compromised Dependencies</strong> -Supply-chain attacks on npm packages that skim storage</span>
               </li>
             </ul>
           </div>
 
           <div className="threat-card threat-impact">
             <h3>Real-World Impact</h3>
-            <p>
-              Once a token is stolen, an attacker can:
-            </p>
+            <p>Once a token is stolen, an attacker can:</p>
             <div className="impact-grid">
               <div className="impact-item">
                 <span className="impact-label">Session Hijacking</span>
@@ -179,15 +153,15 @@ function InstructionsPage() {
             <ul className="resolution-list">
               <li>
                 <span className="res-badge">httpOnly: true</span>
-                <span>JavaScript cannot read or write the cookie — it's invisible to <code>document.cookie</code></span>
+                <span>JavaScript cannot read or write the cookie -it's invisible to <code>document.cookie</code></span>
               </li>
               <li>
-                <span className="res-badge">sameSite: 'strict'</span>
-                <span>Blocks cross-origin requests from sending the cookie — neutralizes CSRF</span>
+                <span className="res-badge">sameSite: 'none'</span>
+                <span>Permits full cross-origin but handles secure session mapping parameters cleanly</span>
               </li>
               <li>
                 <span className="res-badge">secure: true</span>
-                <span>Cookie is transmitted only over HTTPS — prevents MITM token interception</span>
+                <span>Cookie is transmitted only over HTTPS -prevents MITM token interception</span>
               </li>
             </ul>
           </div>
@@ -197,14 +171,8 @@ function InstructionsPage() {
       {/* SECTION 3: Backend Blueprint Comparison */}
       <section className="info-section">
         <div className="section-header">
-          <div className="section-icon code">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="16 18 22 12 16 6" />
-              <polyline points="8 6 2 12 8 18" />
-            </svg>
-          </div>
           <div>
-            <h2 className="section-title">Section 3 — Backend Blueprint Comparison</h2>
+            <h2 className="section-title">Section 3 -Backend Blueprint Comparison</h2>
             <p className="section-subtitle">Architectural differences between vulnerable and secure token delivery.</p>
           </div>
         </div>
@@ -212,20 +180,22 @@ function InstructionsPage() {
         <div className="code-grid">
           <div className="code-column">
             <div className="code-block-header danger-header">
-              <span className="block-label">Vulnerable — Raw JSON Response</span>
+              <span className="block-label">Vulnerable -Raw JSON Response</span>
               <span className="block-badge badge-danger">INSECURE</span>
             </div>
             <div className="code-block">
-              <pre><code>{`const loginVulnerable = (req, res) => {`}</code></pre>
-              <pre><code>{`  const token = createToken();`}</code></pre>
-              <pre><code>{``}</code></pre>
-              <pre><code>{`  // Token is delivered as plain JSON`}</code></pre>
-              <pre><code>{`  return res.json({`}</code></pre>
-              <pre><code>{`    success: true,`}</code></pre>
-              <pre><code>{`    token,        // ← RAW TOKEN EXPOSED`}</code></pre>
-              <pre><code>{`    user: createUserProfile()`}</code></pre>
-              <pre><code>{`  });`}</code></pre>
-              <pre><code>{`};`}</code></pre>
+              <pre><code>{`const loginVulnerable = (req, res) => {
+  const token = createToken();
+
+  // Token is delivered as plain JSON
+  return res.json({
+    success: true,
+    token,        // ← RAW TOKEN EXPOSED
+    user: createUserProfile()
+
+    //This is a critical flaw in the hands of a hacker
+  });
+};`}</code></pre>
             </div>
             <div className="code-explanation">
               <div className="exp-item">
@@ -245,22 +215,22 @@ function InstructionsPage() {
 
           <div className="code-column">
             <div className="code-block-header secure-header">
-              <span className="block-label">Secure — Server-Managed Cookie</span>
+              <span className="block-label">Secure -Server-Managed Cookie</span>
               <span className="block-badge badge-secure">PROTECTED</span>
             </div>
             <div className="code-block">
-              <pre><code>{`const loginSecure = (req, res) => {`}</code></pre>
-              <pre><code>{`  const token = createToken();`}</code></pre>
-              <pre><code>{``}</code></pre>
-              <pre><code>{`  res.cookie('token', token, {`}</code></pre>
-              <pre><code>{`    httpOnly: true,   // ← JS FIREWALL`}</code></pre>
-              <pre><code>{`    secure: true,     // ← HTTPS MANDATE`}</code></pre>
-              <pre><code>{`    sameSite: 'none', // ← CSRF BUFFER`}</code></pre>
-              <pre><code>{`    maxAge: 86400000   // ← 24h TTL`}</code></pre>
-              <pre><code>{`  });`}</code></pre>
-              <pre><code>{``}</code></pre>
-              <pre><code>{`  return res.json({ success: true });`}</code></pre>
-              <pre><code>{`};`}</code></pre>
+              <pre><code>{`const loginSecure = (req, res) => {
+  const token = createToken();
+
+  res.cookie('token', token, {
+    httpOnly: true,   // ← JS FIREWALL
+    secure: true,     // ← HTTPS MANDATE
+    sameSite: 'none', // ← CORS COMPLIANT
+    maxAge: 86400000   // ← 24h TTL
+  });
+
+  return res.json({ success: true });
+};`}</code></pre>
             </div>
             <div className="code-explanation">
               <div className="exp-item">
@@ -273,7 +243,7 @@ function InstructionsPage() {
               </div>
               <div className="exp-item">
                 <span className="exp-icon exp-good">✓</span>
-                <span>JavaScript has <strong>zero access</strong> — <code>document.cookie</code> returns an empty string</span>
+                <span>JavaScript has <strong>zero access</strong> -<code>document.cookie</code> returns empty string</span>
               </div>
             </div>
           </div>
@@ -297,7 +267,7 @@ function InstructionsPage() {
                 <span className="flag-value">'none'</span>
               </div>
               <p>
-                The <strong>CSRF buffer.</strong> Controls when the cookie is sent with cross-origin requests. <code>'strict'</code> blocks all cross-site usage; <code>'lax'</code> allows it on top-level navigations; <code>'none'</code> permits full cross-origin but requires <code>secure: true</code>.
+                The <strong>Cross-Origin architecture configuration.</strong> Controls when cookies travel across distinct cloud deployment URLs. Setting <code>'none'</code> ensures your Vercel client cleanly provides session context validation back to the Render database cluster.
               </p>
             </div>
             <div className="flag-card">
@@ -316,11 +286,7 @@ function InstructionsPage() {
       {/* Navigation Footer */}
       <div className="page-footer">
         <a href="/" className="footer-link">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="19" y1="12" x2="5" y2="12" />
-            <polyline points="12 19 5 12 12 5" />
-          </svg>
-          Return to Security Lab
+          ← Return to Security Lab
         </a>
       </div>
     </div>
