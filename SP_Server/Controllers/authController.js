@@ -28,12 +28,16 @@ const loginVulnerable = (req, res) => {
 const loginSecure = (req, res) => {
   const token = createToken();
 
-  res.cookie('token', token, {
+  const cookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
     maxAge: 24 * 60 * 60 * 1000
-  });
+  };
+
+  if (process.env.COOKIE_DOMAIN) cookieOptions.domain = process.env.COOKIE_DOMAIN;
+
+  res.cookie('token', token, cookieOptions);
 
   return res.json({
     success: true,

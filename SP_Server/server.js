@@ -8,6 +8,11 @@ require('dotenv').config();
 
 const app = express();
 
+// When behind a proxy (Render, Vercel, etc.) enable trust proxy so secure cookies work
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   credentials: true
