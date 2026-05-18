@@ -9,14 +9,23 @@ function AuthPage() {
   const [user, setUser] = useState(null);
   const [dashboardData, setDashboardData] = useState(null);
 
-  const handleLogin = async () => {
+ const handleLogin = async () => {
+    // Standard explicit application config for cross-origin tracking
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
     try {
       if (authMode === 'vulnerable') {
-        const res = await axios.post(`${API_URL}/auth/login-vulnerable`);
+        // Pass an explicit empty body object {} as the second argument
+        const res = await axios.post(`${API_URL}/auth/login-vulnerable`, {}, config);
         localStorage.setItem('auth_token', res.data.token);
         setUser(res.data.user);
       } else {
-        const res = await axios.post(`${API_URL}/auth/login-secure`);
+        // Pass an explicit empty body object {} as the second argument
+        const res = await axios.post(`${API_URL}/auth/login-secure`, {}, config);
         setUser(res.data.user);
       }
     } catch (error) {
