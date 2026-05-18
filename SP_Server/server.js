@@ -13,22 +13,19 @@ if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
 }
 
-// Allow both with and without trailing slash to prevent browser conflicts
+
 const allowedOrigins = [
   'https://sp-client-seven.vercel.app',
-  'https://sp-client-seven.vercel.app/',
-  'http://localhost:5173'
+  'https://sp-client-seven.vercel.app/'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    // Allow local development testing and match against the array
+    if (!origin || allowedOrigins.includes(origin) || origin.startsWith('http://localhost')) {
+      return callback(null, true);
     }
-    return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
   },
   credentials: true
 }));
