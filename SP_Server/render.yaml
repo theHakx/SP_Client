@@ -1,0 +1,23 @@
+# Render service descriptor for SP_Server
+# Replace env var placeholders in Render dashboard or set them as secrets.
+services:
+  - type: web
+    name: sp-server
+    env: node
+    plan: free
+    region: oregon
+    branch: default
+    repo: https://github.com/theHakx/SP_Server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        value: ${MONGO_URI}
+      - key: JWT_SECRET
+        value: ${JWT_SECRET}
+      - key: FRONTEND_URL
+        value: ${FRONTEND_URL}
+      - key: NODE_ENV
+        value: production
+      - key: COOKIE_DOMAIN
+        value: ${COOKIE_DOMAIN}
