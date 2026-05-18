@@ -13,35 +13,38 @@ if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
 }
 
-
+// Hardcoded literal array to bypass any hidden string/whitespace parsing bugs
 const allowedOrigins = [
   'https://sp-client-seven.vercel.app',
-  'https://sp-client-seven.vercel.app/'
+  'https://sp-client-seven.vercel.app/',
+  'http://localhost:5173',
+  'http://localhost:5000'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow local development testing and match against the array
-    if (!origin || allowedOrigins.includes(origin) || origin.startsWith('http://localhost')) {
+    // 1. Allow mobile/server-to-server testing tools (like Postman/Insomnia) where origin is undefined
+    // 2. Match strictly against our explicit production and development array whitelist
+    if (!origin || allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
-    return callback(new Error('Not allowed by CORS'));
+    return callback(new Error('Not allowed by CORS Gateway policy'));
   },
   credentials: true
 }));
 
-
 app.use(express.json());
 app.use(cookieParser());
 
-// Local MongoDB Connection
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB Connected Successfully'))
   .catch(err => console.error('MongoDB Connection Error, Abort:', err));
 
-// checking the DB is breathing
+// Check if the DB gateway is breathing
 app.get('/', (req, res) => res.send('PoC Gateway API Online'));
 
+// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
